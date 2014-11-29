@@ -29,7 +29,7 @@
 # "temporary" build files
 /target
 
-./idea
+/.idea
 /*.iml
 
 /out
