@@ -2,6 +2,12 @@ package muzic
 
 class Song {
 
-    static constraints = {
-    }
+  String title
+  String lyrics
+  Artist artist
+  Long releaseYear
+
+  static constraints = {
+
+  }
 }
