@@ -43,4 +43,17 @@ class UserIntegrationSpec extends Specification {
     then:
     !User.exists(user.id)
   }
+
+  def 'saving a user with invalid properties fails to validate'() {
+    setup:
+    def user = new User(email: 'not', password: '123', status: 'a'*200)
+
+    when:
+    def result = user.save()
+
+    then:
+    !result
+    user.errors.errorCount == 3
+    user.errors.getFieldError('email').rejectedValue == 'not'
+  }
 }
