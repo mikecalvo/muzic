@@ -17,4 +17,30 @@ class UserIntegrationSpec extends Specification {
     user.dateCreated
     User.get(user.id).email == 'mike@calvo.com'
   }
+
+  def 'updating a user changes data'() {
+    setup:
+    def user = new User(email: 'joe@smith.com', password: '7654321').save(failOnError: true)
+    user.save(failOnError: true)
+
+    when:
+    def foundUser = User.get(user.id)
+    foundUser.password = 'secure'
+    foundUser.save(failOnError: true)
+
+    then:
+    User.get(user.id).password == 'secure'
+  }
+
+  def 'deleting an existing user removes it from the database'() {
+    setup:
+    def user = new User(email: 'pat@ska.com', password: 'skillz')
+    user.save(failOnError: true)
+
+    when:
+    user.delete()
+
+    then:
+    !User.exists(user.id)
+  }
 }
