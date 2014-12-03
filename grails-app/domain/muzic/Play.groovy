@@ -2,6 +2,6 @@ package muzic
 
 class Play {
 
-    static constraints = {
-    }
+  Song song
+  Date timestamp
 }
