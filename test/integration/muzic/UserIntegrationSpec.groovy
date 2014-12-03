@@ -14,6 +14,7 @@ class UserIntegrationSpec extends Specification {
     then:
     user.errors.errorCount == 0
     user.id
+    user.dateCreated
     User.get(user.id).email == 'mike@calvo.com'
   }
 }
