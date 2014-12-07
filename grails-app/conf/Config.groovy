@@ -85,6 +85,13 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+// Mongo configuration
+grails {
+  mongo {
+    connectionString = 'mongodb://muzic:muzic2015@ds027698.mongolab.com:27698/muzic'
+  }
+}
+
 environments {
     development {
         grails.logging.jul.usebridge = true
