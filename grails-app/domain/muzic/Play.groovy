@@ -2,6 +2,8 @@ package muzic
 
 class Play {
 
-  Song song
   Date timestamp
+
+  static belongsTo = [artist: Artist]
+  static hasMany = [comments: PlayComment]
 }

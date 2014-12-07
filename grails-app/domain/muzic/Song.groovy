@@ -4,7 +4,8 @@ class Song {
 
   String title
   String lyrics
-  Artist artist
   Long releaseYear
+
+  static belongsTo = [artist: Artist]
 
 }

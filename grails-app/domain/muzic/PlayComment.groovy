@@ -4,6 +4,7 @@ class PlayComment {
 
   String text
   User user
-  Play play
+
+  static belongsTo = [play: Play]
 
 }
