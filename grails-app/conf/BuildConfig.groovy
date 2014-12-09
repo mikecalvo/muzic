@@ -51,6 +51,18 @@ grails.project.dependency.resolution = {
     // runtime 'mysql:mysql-connector-java:5.1.29'
     // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
     test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
+    test "org.gebish:geb-spock:0.10.0"
+    // test "org.gebish:geb:0.10.0"
+    test "org.seleniumhq.selenium:selenium-support:2.44.0"
+    test("com.github.detro.ghostdriver:phantomjsdriver:1.0.1") {
+      transitive = false
+    }
+
+    // This doesn't work due to dom class exceptions
+    // 2.26.0 is last known good? (http://stackoverflow.com/questions/23737442/cannot-use-htmlunitdriver-in-geb-spock-grails-test-because-of-dependencies-probl)
+//    test("org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0") {
+//      exclude 'xml-apis'
+//    }
   }
 
   plugins {
@@ -63,7 +75,9 @@ grails.project.dependency.resolution = {
     compile ":asset-pipeline:1.9.9"
 
     compile ":mongodb:3.0.2"
-    
+    // compile ":functional-test:2.0.0"
+    test "org.grails.plugins:geb:0.10.0"
+
     // plugins needed at runtime but not for compilation
     runtime ":hibernate4:4.3.5.5" // rolled back due to MongoDB issue
     // runtime ":hibernate4:4.3.6.1" // or ":hibernate:3.6.10.18"

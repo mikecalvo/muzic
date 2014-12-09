@@ -47,4 +47,29 @@ class ArtistControllerSpec extends Specification {
     'Ten'        | 10    | 10
     'Cap at ten' | 30    | 10
   }
+
+  def 'gets the requested artist'(){
+    setup:
+    def artist = new Artist(name: 'Portishead').save(failOnError: true)
+    params.id = artist.id
+
+    when:
+    def model = controller.get()
+
+    then:
+    model.artist.id == artist.id
+    model.artist.name == 'Portishead'
+  }
+
+  def 'returns 404 when requested artist is not found'() {
+    setup:
+    params.id = -100
+
+    when:
+    def model = controller.get()
+
+    then:
+    response.status == 404
+    !model
+  }
 }
