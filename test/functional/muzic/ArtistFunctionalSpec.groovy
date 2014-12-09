@@ -24,7 +24,7 @@ class ArtistFunctionalSpec extends GebSpec {
 
   void cleanup() {
     remote {
-      Artist.get(artistId).delete()
+      Artist.findByName('U2').delete()
     }
   }
 
