@@ -3,7 +3,6 @@ package muzic
 import geb.spock.GebSpec
 import grails.plugin.remotecontrol.RemoteControl
 import muzic.pages.ArtistGetPage
-import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
@@ -11,7 +10,6 @@ class ArtistFunctionalSpec extends GebSpec {
 
   def remote = new RemoteControl()
 
-  @Shared
   def artistId
 
   void setup() {
@@ -24,17 +22,16 @@ class ArtistFunctionalSpec extends GebSpec {
 
   void cleanup() {
     remote {
-      Artist.get(artistId).delete()
+      Artist.findByName('U2').delete()
     }
   }
 
   def "gets artist details"() {
     when:
-    def xxx = artistId
-    to ArtistGetPage, id: xxx
+    to ArtistGetPage, id: artistId
 
     then:
     name.text() == 'U2'
-    id.text() == "Id: ${xxx}"
+    id.text() == "Id: ${artistId}"
   }
 }
