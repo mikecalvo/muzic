@@ -58,8 +58,10 @@ grails.project.dependency.resolution = {
       transitive = false
     }
 
+
     // This doesn't work due to dom class exceptions
-    // 2.26.0 is last known good? (http://stackoverflow.com/questions/23737442/cannot-use-htmlunitdriver-in-geb-spock-grails-test-because-of-dependencies-probl)
+    // 2.26.0 is last known good?
+    // http://stackoverflow.com/questions/23737442/cannot-use-htmlunitdriver-in-geb-spock-grails-test-because-of-dependencies-probl)
 //    test("org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0") {
 //      exclude 'xml-apis'
 //    }
@@ -84,6 +86,7 @@ grails.project.dependency.resolution = {
     runtime ":database-migration:1.4.0"
     runtime ":jquery:1.11.1"
 
+    compile ":remote-control:1.5"
     // Uncomment these to enable additional asset-pipeline capabilities
     //compile ":sass-asset-pipeline:1.9.0"
     //compile ":less-asset-pipeline:1.10.0"
