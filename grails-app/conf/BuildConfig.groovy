@@ -46,6 +46,8 @@ grails.project.dependency.resolution = {
     //mavenRepo "http://repository.jboss.com/maven2/"
   }
 
+  def seleniumVersion = "2.44.0"
+
   dependencies {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
     // runtime 'mysql:mysql-connector-java:5.1.29'
@@ -53,7 +55,11 @@ grails.project.dependency.resolution = {
     test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
     test "org.gebish:geb-spock:0.10.0"
     // test "org.gebish:geb:0.10.0"
-    test "org.seleniumhq.selenium:selenium-support:2.44.0"
+    test "org.seleniumhq.selenium:selenium-support:${seleniumVersion}"
+    runtime("org.apache.httpcomponents:httpclient:4.3.4")
+
+
+    test("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion")
     test("com.github.detro.ghostdriver:phantomjsdriver:1.0.1") {
       transitive = false
     }
