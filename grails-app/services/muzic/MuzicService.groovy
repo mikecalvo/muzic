@@ -1,8 +1,5 @@
 package muzic
 
-import grails.transaction.Transactional
-
-@Transactional
 class MuzicService {
 
   def addPlay(String title, String artistName, Date timestamp) {
