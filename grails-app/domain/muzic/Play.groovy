@@ -4,6 +4,6 @@ class Play {
 
   Date timestamp
 
-  static belongsTo = [artist: Artist]
+  static belongsTo = [song: Song]
   static hasMany = [comments: PlayComment]
 }

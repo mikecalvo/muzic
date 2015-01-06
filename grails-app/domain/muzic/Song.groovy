@@ -8,4 +8,8 @@ class Song {
 
   static belongsTo = [artist: Artist]
 
+  static constraints = {
+    lyrics nullable: true
+    releaseYear nullable: true
+  }
 }
