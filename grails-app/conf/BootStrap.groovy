@@ -1,5 +1,6 @@
 import muzic.Artist
 import muzic.Audit
+import muzic.Profile
 import muzic.Role
 import muzic.User
 import muzic.UserRole
@@ -7,21 +8,20 @@ import muzic.UserRole
 class BootStrap {
 
   def setupAccessControl = {
-    def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
-    def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
-    log.info('Created admin and user roles')
+    ['ROLE_ADMIN', 'ROLE_USER'].each {
+      new Role(authority: it).save(flush: true)
+    }
 
-    def testUser = new User(username: 'me', password: 'password')
-    testUser.save(flush: true)
-    log.info('Created test user')
-
-    UserRole.create testUser, adminRole, true
-    UserRole.create testUser, userRole, true
-
-    assert User.count() == 1
-    assert Role.count() == 2
-    assert UserRole.count() == 2
-
+    ['me', 'you'].each { String username ->
+      def testUser = new User(username: username, password: 'password')
+      testUser.save(flush: true)
+      new Profile(email: "${username}@test.com", user: testUser).save(flush: true)
+      log.info("Created test user: ${username}")
+      Role.list().each { Role role ->
+        UserRole.create(testUser, role, true)
+        log.info("Role added to ${username}: ${role.authority}")
+      }
+    }
   }
 
   def init = { servletContext ->
@@ -31,7 +31,7 @@ class BootStrap {
       test {
         setupAccessControl()
       }
-      
+
       development {
         setupAccessControl()
         new Audit(user: 'system', action: 'started').save()
