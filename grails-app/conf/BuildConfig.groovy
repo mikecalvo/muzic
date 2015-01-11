@@ -53,6 +53,8 @@ grails.project.dependency.resolution = {
     test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
     test "org.gebish:geb-spock:0.10.0"
     test "org.seleniumhq.selenium:selenium-support:2.44.0"
+    test "org.seleniumhq.selenium:selenium-chrome-driver:2.44.0"
+
     test("com.github.detro.ghostdriver:phantomjsdriver:1.0.1") {
       transitive = false
     }
@@ -77,6 +79,7 @@ grails.project.dependency.resolution = {
     runtime ":jquery:1.11.1"
 
     compile ":remote-control:1.5"
+    compile ":spring-security-core:2.0-RC4"
     // Uncomment these to enable additional asset-pipeline capabilities
     //compile ":sass-asset-pipeline:1.9.0"
     //compile ":less-asset-pipeline:1.10.0"

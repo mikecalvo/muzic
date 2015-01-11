@@ -3,6 +3,7 @@ package muzic
 import geb.spock.GebSpec
 import grails.plugin.remotecontrol.RemoteControl
 import muzic.pages.ArtistGetPage
+import muzic.pages.LoginPage
 import spock.lang.Stepwise
 
 @Stepwise
@@ -11,6 +12,12 @@ class ArtistFunctionalSpec extends GebSpec {
   def remote = new RemoteControl()
 
   def artistId
+
+  def setupSpec() {
+    to LoginPage
+
+    login('me', 'password')
+  }
 
   void setup() {
     artistId = remote {

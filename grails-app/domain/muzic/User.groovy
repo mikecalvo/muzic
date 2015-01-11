@@ -2,14 +2,41 @@ package muzic
 
 class User {
 
-  String email
-  String password
-  String status
-  Date dateCreated
+	transient springSecurityService
 
-  static constraints = {
-    email nullable: false, email: true, unique: true
-    password nullable: false, size: 6..12
-    status nullable: true, size: 0..64
-  }
+	String username
+	String password
+	boolean enabled = true
+	boolean accountExpired
+	boolean accountLocked
+	boolean passwordExpired
+
+	static transients = ['springSecurityService']
+
+	static constraints = {
+		username blank: false, unique: true
+		password blank: false
+	}
+
+	static mapping = {
+		password column: '`password`'
+	}
+
+	Set<Role> getAuthorities() {
+		UserRole.findAllByUser(this).collect { it.role }
+	}
+
+	def beforeInsert() {
+		encodePassword()
+	}
+
+	def beforeUpdate() {
+		if (isDirty('password')) {
+			encodePassword()
+		}
+	}
+
+	protected void encodePassword() {
+		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+	}
 }

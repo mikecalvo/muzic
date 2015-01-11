@@ -3,7 +3,7 @@ package muzic
 class PlayComment {
 
   String text
-  User user
+  Profile user
 
   static belongsTo = [play: Play]
 
