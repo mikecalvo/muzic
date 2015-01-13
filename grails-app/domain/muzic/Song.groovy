@@ -1,5 +1,8 @@
 package muzic
 
+import grails.rest.Resource
+
+@Resource(uri='/api/songs', formats = ['json', 'xml'])
 class Song {
 
   String title

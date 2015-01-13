@@ -54,6 +54,7 @@ grails.project.dependency.resolution = {
     // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
     // runtime 'mysql:mysql-connector-java:5.1.29'
     // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
+    // test "org.codehaus.groovy.modules.http-builder:http-builder:0.7"
     test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
     test "org.gebish:geb-spock:0.10.0"
     test "org.seleniumhq.selenium:selenium-support:2.44.0"

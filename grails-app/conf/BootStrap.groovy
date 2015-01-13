@@ -1,9 +1,4 @@
-import muzic.Artist
-import muzic.Audit
-import muzic.Profile
-import muzic.Role
-import muzic.User
-import muzic.UserRole
+import muzic.*
 
 class BootStrap {
 
@@ -38,11 +33,15 @@ class BootStrap {
 
         if (!Artist.count()) {
           [
-              new Artist(name: 'New Order'),
-              new Artist(name: 'Daft Punk')
-          ].each {
-            def artist = it.save(failOnError: true)
-            log.info("Saved artist ${artist.id}")
+              'New Order': ['Blue Monday', 'Temptation', 'True Faith'],
+              'Daft Punk': ['One More Time', 'Lucky', 'Around the World']
+          ].each { def artistName, def tracks ->
+            def artist = new Artist(name: artistName)
+            artist.save(failOnError: true)
+            tracks.each { def track ->
+              new Song(artist: artist, title: track).save(failOnError: true)
+            }
+            log.info("Saved artist ${artist.name} (${artist.id})")
           }
         }
       }

@@ -111,6 +111,7 @@ log4j.main = {
   //}
 
   info "grails.app"
+  info 'grails.plugin.springsecurity.web.filter.DebugFilter'
 
   error 'org.codehaus.groovy.grails.web.servlet',        // controllers
       'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -124,6 +125,14 @@ log4j.main = {
       'org.hibernate',
       'net.sf.ehcache.hibernate'
 }
+
+// To debug security issues uncomment these lines
+// grails.logging.jul.usebridge = true
+// grails.plugin.springsecurity.debug.useFilter = true
+
+// Enable access by default
+grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'muzic.User'
@@ -139,9 +148,11 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/**/images/**'  : ['permitAll'],
     '/**/favicon.ico': ['permitAll'],
 
-    '/artist/**': ['ROLE_USER'],
-    '/song/**': ['ROLE_USER'],
-    '/grails-remote-control/**': ['permitAll']
+    // REST API
+    '/api/songs/**': ['permitAll'],
 
+    '/artist/**': ['ROLE_USER'],
+    '/profile/**': ['ROLE_USER'],
+    '/grails-remote-control/**': ['permitAll']
 ]
 
