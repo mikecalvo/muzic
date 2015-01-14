@@ -36,17 +36,16 @@ class ArtistRestControllerSpec extends Specification {
 
   def 'creates an artist'() {
     // TODO: Determine why this doesn't work (returns 405).  Assumptions is the @Transaction on the save method
-    /*
     given:
+    request.method = 'POST'
     controller.request.json = '{"name": "Stereolab", "class": "muzic.Artist"}'
 
     when:
     controller.save()
 
     then:
-    response.status == 200
+    response.status == 201
     response.json.id != null
-    */
   }
 
   def 'edits an artist'() {

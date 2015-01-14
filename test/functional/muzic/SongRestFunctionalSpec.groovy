@@ -1,6 +1,7 @@
 package muzic
 
 import grails.plugin.remotecontrol.RemoteControl
+import grails.util.Holders
 import groovy.json.JsonSlurper
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.DecompressingHttpClient
@@ -12,6 +13,8 @@ class SongRestFunctionalSpec extends Specification {
   static Integer songId
 
   JsonSlurper jsonSlurper = new JsonSlurper()
+
+  // def grailsApplication
 
   private def client = new DefaultHttpClient()
 
@@ -61,15 +64,14 @@ class SongRestFunctionalSpec extends Specification {
   }
 
   private def doGet(String path) {
-    def baseUrl = System.getProperty('geb.build.baseUrl')
-    def url = baseUrl + path
+    def url = Holders.config.grails.serverURL + '/'+path
     def request = new HttpGet(url)
     def client = new DecompressingHttpClient(new DefaultHttpClient())
     def response = client.execute(request)
 
     String str = new String(response.entity?.content?.bytes, 'UTF-8');
     def contentType = response.entity?.contentType?.value
-    if (contentType.contains(';charset=')) {
+    if (contentType?.contains(';charset=')) {
       contentType = contentType.split(';')[0]
     }
     return [

@@ -95,12 +95,19 @@ grails {
 environments {
   development {
     grails.logging.jul.usebridge = true
+    grails.serverURL = 'http://localhost:8080/muzic'
+    remoteControl.enabled = true
+  }
+  test {
+    grails.serverURL = 'http://localhost:8080/muzic'
+    remoteControl.enabled = true
   }
   production {
     grails.logging.jul.usebridge = false
     // TODO: grails.serverURL = "http://www.changeme.com"
   }
 }
+
 
 // log4j configuration
 log4j.main = {
