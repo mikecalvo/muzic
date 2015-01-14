@@ -15,7 +15,7 @@ grails.project.fork = [
     test   : false,
     // test: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
     // configure settings for the run-app JVM
-    run    : [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve: false],
+    run    : false, //[maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve: false],
     // ******* IMPORTANT **********
     // To enable debugging in intellij, set run: false
     // Functional tests require it to not be false
@@ -85,6 +85,7 @@ grails.project.dependency.resolution = {
 
     compile ":remote-control:1.5"
     compile ":spring-security-core:2.0-RC4"
+    compile ":rest:0.8"
     // Uncomment these to enable additional asset-pipeline capabilities
     //compile ":sass-asset-pipeline:1.9.0"
     //compile ":less-asset-pipeline:1.10.0"
