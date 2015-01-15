@@ -15,7 +15,7 @@ grails.project.fork = [
     test   : false,
     // test: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
     // configure settings for the run-app JVM
-    run    : false, //[maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve: false],
+    run    : [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve: false],
     // ******* IMPORTANT **********
     // To enable debugging in intellij, set run: false
     // Functional tests require it to not be false
