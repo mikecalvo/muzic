@@ -35,7 +35,6 @@ class ArtistRestControllerSpec extends Specification {
   }
 
   def 'creates an artist'() {
-    // TODO: Determine why this doesn't work (returns 405).  Assumptions is the @Transaction on the save method
     given:
     request.method = 'POST'
     controller.request.json = '{"name": "Stereolab", "class": "muzic.Artist"}'
@@ -49,9 +48,8 @@ class ArtistRestControllerSpec extends Specification {
   }
 
   def 'edits an artist'() {
-    // TODO: Determine why this doesn't work (returns 405).  Assumptions is the @Transaction on the save method
-    /*
     given:
+    request.method = 'PUT'
     def id = new Artist(name: 'Stereolab').save(failOnError: true, flush: true).id
 
     and:
@@ -61,12 +59,11 @@ class ArtistRestControllerSpec extends Specification {
     controller.request.json = '{"class": "muzic.Artist", "name": "The Groop", "id": '+id+'}'
 
     when:
-    controller.save()
+    controller.update()
 
     then:
     response.status == 200
     response.json.id != null
     response.json.name == 'The Groop'
-    */
   }
 }
