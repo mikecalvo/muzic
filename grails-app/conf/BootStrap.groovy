@@ -3,17 +3,24 @@ import muzic.*
 class BootStrap {
 
   def setupAccessControl = {
+
     ['ROLE_ADMIN', 'ROLE_USER'].each {
-      new Role(authority: it).save(flush: true)
+      if (!Role.findByAuthority(it)) {
+        new Role(authority: it).save(flush: true, failOnError: true)
+      }
     }
 
     ['me', 'you'].each { String username ->
+      if (User.findByUsername(username)) {
+        return
+      }
+
       def testUser = new User(username: username, password: 'password')
       testUser.save(flush: true)
-      new Profile(email: "${username}@test.com", user: testUser).save(flush: true)
+      new Profile(email: "${username}@test.com", user: testUser).save(flush: true, failOnError: true)
       log.info("Created test user: ${username}")
       Role.list().each { Role role ->
-        UserRole.create(testUser, role, true)
+        new UserRole(user: testUser, role: role).save(flush: true, failOnError: true)
         log.info("Role added to ${username}: ${role.authority}")
       }
     }

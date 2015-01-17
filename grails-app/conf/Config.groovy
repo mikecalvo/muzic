@@ -119,6 +119,7 @@ log4j.main = {
 
   info "grails.app"
   info 'grails.plugin.springsecurity.web.filter.DebugFilter'
+  info 'muzic'
 
   error 'org.codehaus.groovy.grails.web.servlet',        // controllers
       'org.codehaus.groovy.grails.web.pages',          // GSP
