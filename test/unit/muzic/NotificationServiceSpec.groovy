@@ -23,7 +23,7 @@ class NotificationServiceSpec extends Specification {
     def payload = (play as JSON) as String
 
     when:
-    service.onMessage(payload)
+    service.songPlayed(payload)
 
     then:
     ProfileMessage.count() == 1

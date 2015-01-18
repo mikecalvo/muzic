@@ -1,17 +1,15 @@
 package muzic
 
 import grails.converters.JSON
+import grails.events.Listener
 
 class NotificationService {
 
-  static expose = ['jms']
-
-  static destination = 'songPlayed'
-
   static transactional = false
 
-  def onMessage(def message) {
-    def id = (JSON.parse(message) as Map).id as Long
+  @Listener
+  def songPlayed(def message) {
+    def id = (JSON.parse(message as String) as Map).id as Long
     Play play = Play.get(id)
     if (!play) {
       log.error("Invalid message received for Play with id:${id}")

@@ -3,8 +3,7 @@ import grails.converters.JSON
 
 class PlayService {
 
-  def jmsService
-  static def SEND_QUEUE = 'songPlayed'
+  static def TOPIC = 'songPlayed'
 
   static transactional = false
 
@@ -20,10 +19,7 @@ class PlayService {
 
       def messageString = (play as JSON) as String
       log.info("Sending song message: ${messageString}")
-      jmsService.send(queue:SEND_QUEUE, messageString, { def message ->
-        log.info("Send completed ${message}")
-      })
-
+      event(TOPIC, messageString, [fork: true])
       println '********* On songPlayed end: songs='+Song.count+' artists='+Artist.count+' profiles='+Profile.count
       return play
     }

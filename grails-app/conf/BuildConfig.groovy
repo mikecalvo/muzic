@@ -62,8 +62,6 @@ grails.project.dependency.resolution = {
     test("com.github.detro.ghostdriver:phantomjsdriver:1.0.1") {
       transitive = false
     }
-
-    compile 'org.apache.activemq:activemq-core:5.7.0'
   }
 
   plugins {
@@ -87,7 +85,7 @@ grails.project.dependency.resolution = {
     compile ":remote-control:1.5"
     compile ":spring-security-core:2.0-RC4"
     compile ":rest:0.8"
-    compile ":jms:1.3"
+    compile ":platform-core:1.0.0"
     // Uncomment these to enable additional asset-pipeline capabilities
     //compile ":sass-asset-pipeline:1.9.0"
     //compile ":less-asset-pipeline:1.10.0"
