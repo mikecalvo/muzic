@@ -7,6 +7,7 @@ class Profile {
   Date dateCreated
 
   static belongsTo = [user: User]
+  static hasMany = [messages: ProfileMessage]
 
   static constraints = {
     email nullable: false, email: true, unique: true

@@ -23,5 +23,6 @@
 /.idea
 /*.iml
 /out
+/activemq-data
 muzic.ipr
 muzic.iws
