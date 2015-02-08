@@ -71,11 +71,7 @@ grails.project.dependency.resolution = {
     // plugins for the compile step
     compile ":scaffolding:2.1.2"
     compile ':cache:1.1.8'
-    compile ":asset-pipeline:1.9.9"
-
-    compile ":mongodb:3.0.2"
-    test "org.grails.plugins:geb:0.10.0"
-
+    
     // plugins needed at runtime but not for compilation
     runtime ":hibernate4:4.3.5.5" // rolled back due to MongoDB issue
     // runtime ":hibernate4:4.3.6.1" // or ":hibernate:3.6.10.18"
@@ -86,10 +82,8 @@ grails.project.dependency.resolution = {
     compile ":spring-security-core:2.0-RC4"
     compile ":rest:0.8"
     compile ":platform-core:1.0.0"
-    // Uncomment these to enable additional asset-pipeline capabilities
-    //compile ":sass-asset-pipeline:1.9.0"
-    //compile ":less-asset-pipeline:1.10.0"
-    //compile ":coffee-asset-pipeline:1.8.0"
-    //compile ":handlebars-asset-pipeline:1.3.0.3"
+    compile ":asset-pipeline:2.1.1"
+    compile ":mongodb:3.0.2"
+    test "org.grails.plugins:geb:0.10.0"
   }
 }
