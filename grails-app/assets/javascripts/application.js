@@ -5,16 +5,12 @@
 // You're free to add application-wide JavaScript to this file, but it's generally better 
 // to create separate JavaScript files as needed.
 //
-//= require jquery
+//= require jquery/dist/jquery
+//= require angular/angular
 //= require_tree .
 //= require_self
 
-if (typeof jQuery !== 'undefined') {
-	(function($) {
-		$('#spinner').ajaxStart(function() {
-			$(this).fadeIn();
-		}).ajaxStop(function() {
-			$(this).fadeOut();
-		});
-	})(jQuery);
-}
+angular.module('app', []);
+angular.module('app').controller('welcomeController', function($scope) {
+  $scope.message = 'Welcome to the Muzic App!'
+});
