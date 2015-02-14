@@ -1,8 +1,3 @@
-eventCleanEnd = {
-  Ant.delete('dir':'target')
-  Ant.delete('dir':'grails-app/assets/bower_components')
-}
-
 eventCompileStart = { kind ->
   executeGruntTasks()
 }
