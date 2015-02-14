@@ -24,5 +24,7 @@
 /*.iml
 /out
 /activemq-data
+/node_modules
+/grails-app/assets/bower_components
 muzic.ipr
 muzic.iws

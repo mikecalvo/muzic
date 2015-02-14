@@ -10,7 +10,3 @@
 //= require_tree .
 //= require_self
 
-angular.module('app', []);
-angular.module('app').controller('welcomeController', function($scope) {
-  $scope.message = 'Welcome to the Muzic App!'
-});

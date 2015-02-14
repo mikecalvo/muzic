@@ -1,0 +1,29 @@
+{
+  "name": "muzic",
+  "version": "1.0.0",
+  "description": "muzic =====",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikecalvo/muzic.git"
+  },
+  "keywords": [],
+  "author": "Mike Calvo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikecalvo/muzic/issues"
+  },
+  "homepage": "https://github.com/mikecalvo/muzic",
+  "dependencies": {
+    "bower": "^1.3.12",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-shell": "^1.1.1"
+  }
+}
