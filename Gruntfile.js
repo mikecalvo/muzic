@@ -8,11 +8,11 @@ module.exports = function (grunt) {
         stdout: true
       },
       localInstall: {
-        command: "./node_modules/.bin/bower update --force --quiet --offline"
+        command: "./node_modules/.bin/bower update --quiet --offline"
       },
 
       webInstall: {
-        command: "./node_modules/.bin/bower update --force --quiet"
+        command: "./node_modules/.bin/bower update --quiet"
       }
     }
   });

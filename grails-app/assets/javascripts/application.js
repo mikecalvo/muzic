@@ -6,7 +6,6 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery/dist/jquery
-//= require bootstrap/dist/js/bootstrap
 //= require angular/angular
 //= require_self
 //= require_tree .
