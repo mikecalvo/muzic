@@ -7,6 +7,12 @@
 //
 //= require jquery/dist/jquery
 //= require angular/angular
-//= require_tree .
 //= require_self
+//= require_tree .
+
+var app = angular.module('app', []);
+app.controller('welcomeController', function ($scope) {
+    $scope.message = 'Welcome to the Muzic App'
+  }
+);
 

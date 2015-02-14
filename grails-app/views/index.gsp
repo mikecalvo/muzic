@@ -12,11 +12,22 @@
   {{ message }}
 </div>
 
-<script>
-  var app = angular.module('app', []);
-  app.controller('welcomeController', function ($scope) {
-    $scope.message = 'Welcome to the Muzic App'
-  })
-</script>
+<div ng-controller="songPlaysController">
+
+  <button ng-click="addPlay()">Add a Play</button>
+  <table>
+    <thead>
+    <tr>
+      <td>Title</td><td>Artist</td><td>Date/Time</td>
+    </tr>
+    </thead>
+    <tr ng-repeat="play in plays">
+      <td>{{ play.song.title }}</td>
+      <td>{{ play.artist.name }}</td>
+      <td>{{ play.time | date :'medium' }}</td>
+    </tr>
+  </table>
+</div>
+
 </body>
 </html>
