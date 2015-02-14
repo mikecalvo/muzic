@@ -14,7 +14,7 @@
 
 <div ng-controller="songPlaysController">
 
-  <button ng-click="addPlay()">Add a Play</button>
+  <button ng-click="addPlay()" ng-show="!newPlay">Add a Play</button>
   <table>
     <thead>
     <tr>
@@ -25,6 +25,11 @@
       <td>{{ play.song.title }}</td>
       <td>{{ play.artist.name }}</td>
       <td>{{ play.time | date :'medium' }}</td>
+    </tr>
+    <tr ng-show="newPlay">
+      <td><input placeholder="Title" ng-model="newPlay.song.title"></td>
+      <td><input placeholder="Artist" ng-model="newPlay.artist.name"></td>
+      <td>{{ newPlay.time | date :'medium' }} <button ng-click="savePlay()">Save</button></td>
     </tr>
   </table>
 </div>

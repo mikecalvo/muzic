@@ -12,6 +12,11 @@ angular.module('app').controller('songPlaysController', function ($scope) {
   $scope.addPlay = function() {
     var now = new Date();
     $scope.newPlay = {time: now};
-    $scope.plays.push($scope.newPlay);
   };
+
+  $scope.savePlay = function() {
+    $scope.plays.push($scope.newPlay);
+    delete $scope.newPlay;
+  };
+
 });
