@@ -8,10 +8,11 @@
 //= require jquery/dist/jquery
 //= require bootstrap/dist/js/bootstrap
 //= require angular/angular
+//= require angular-bootstrap/ui-bootstrap-tpls
 //= require_self
 //= require_tree .
 
-var app = angular.module('app', []);
+var app = angular.module('app', ['ui.bootstrap']);
 app.controller('welcomeController', function ($scope) {
     $scope.message = 'Welcome to the Muzic App'
   }
