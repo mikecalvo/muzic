@@ -56,6 +56,7 @@ grails.project.dependency.resolution = {
     test("com.github.detro.ghostdriver:phantomjsdriver:1.0.1") {
       transitive = false
     }
+    test "org.seleniumhq.selenium:selenium-chrome-driver:2.44.0"
   }
 
   plugins {
