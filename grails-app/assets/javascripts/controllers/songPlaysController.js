@@ -1,4 +1,6 @@
-angular.module('app').controller('songPlaysController', function ($scope, $modal) {
+'use strict';
+
+angular.module('app').controller('SongPlaysController', function ($scope, $modal) {
   var getPlayData = function () {
     return [
       {song: {title: 'Blue Monday'}, artist: {name: 'New Order'}, time: new Date('02/14/2015 12:37:00')},
@@ -44,7 +46,7 @@ angular.module('app').controller('songPlaysController', function ($scope, $modal
 
   $scope.deletePlay = function (play) {
     var modalInstance = $modal.open({
-      templateUrl: 'confirmDialog.html',
+      templateUrl: 'templates/dialogs/confirmDialog.html',
       size: 'lg',
       controller: 'confirmDialogController',
       resolve: {

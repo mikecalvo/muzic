@@ -1,0 +1,16 @@
+<div ng-controller="ArtistController">
+  <h1>{{ artist.name }}</h1>
+  <div class="well">
+    TODO: List songs and plays here...
+    <ul>
+      <li>one</li>
+      <li>two</li>
+      <li>three</li>
+    </ul>
+  </div>
+  <div class="right-container">
+    <a ng-href="http://en.wikipedia.org/wiki/{{ artist.wikiName }}">Learn more</a> about {{ artist.name }}<br>
+    <a href="#/">Return to plays</a><br>
+    <a ng-click="returnToPlays()">Returns to plays (via controller behavior)</a>
+  </div>
+</div>
