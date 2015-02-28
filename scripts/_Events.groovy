@@ -1,5 +1,29 @@
 eventCompileStart = { kind ->
+  executeNpmInstall()
+  executeBowerInstall()
   executeGruntTasks()
+}
+
+private void executeNpmInstall() {
+  def npmInstall = "npm install"
+  println "| npm install..."
+  def proc = npmInstall.execute()
+  proc.waitFor()
+  if (proc.exitValue() != 0) {
+    println "Error installing npm dependencies"
+    println "Output: ${proc.in.text}"
+  }
+}
+
+private void executeBowerInstall() {
+  def bowerInstall = "node_modules/.bin/bower install"
+  println "| bower install..."
+  def proc = bowerInstall.execute()
+  proc.waitFor()
+  if (proc.exitValue() != 0) {
+    println "Error installing bower dependencies"
+    println "Output: ${proc.in.text}"
+  }
 }
 
 private void executeGruntTasks() {
@@ -15,3 +39,4 @@ private void executeGruntTasks() {
     println "Output: ${proc.in.text}"
   }
 }
+
