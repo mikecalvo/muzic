@@ -55,7 +55,7 @@ angular.module('app').controller('SongPlaysController', function ($scope, $modal
     var modalInstance = $modal.open({
       templateUrl: 'templates/dialogs/confirmDialog.html',
       size: 'lg',
-      controller: 'confirmDialogController',
+      controller: 'ConfirmDialogController',
       resolve: {
         message: function () {
           return 'Are you sure you want to delete "' + play.song.title + '" by ' + play.song.artist.name + '?'
@@ -73,18 +73,4 @@ angular.module('app').controller('SongPlaysController', function ($scope, $modal
       })
     });
   }
-
-})
-
-  .controller('confirmDialogController', function ($scope, $modalInstance, title, message) {
-    $scope.message = message;
-    $scope.title = title;
-
-    $scope.ok = function () {
-      $modalInstance.close();
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-  });
+});

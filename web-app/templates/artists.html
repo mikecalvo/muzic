@@ -1,0 +1,30 @@
+<div ng-controller="ArtistsController">
+
+  <h1>Artists</h1>
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+  <button class="btn-default" ng-click="addArtist()">
+    <i class="glyphicon glyphicon-plus-sign"></i> Add Artist
+  </button>
+
+  <table id="artists">
+    <tbody>
+    <tr ng-repeat="artist in artists">
+      <td>{{ artist.name }}</td>
+      <td>
+        <button class="delete" ng-click="deleteArtist(artist)"><i class="glyphicon glyphicon-trash"></i></button>
+      </td>
+    </tr>
+    <tr ng-show="newArtist">
+      <td><input id="name" placeholder="Name" ng-model="newArtist.name"></td>
+      <td>
+        <button id="save-artist-btn" class="btn btn-default" ng-click="saveArtist()">
+          <i class="glyphicon glyphicon-floppy-disk"></i>
+          Save
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage"></pagination>
+</div>

@@ -8,11 +8,12 @@
 //= require jquery/dist/jquery
 //= require bootstrap/dist/js/bootstrap
 //= require angular/angular
+//= require angular-resource/angular-resource
 //= require angular-route/angular-route
 //= require angular-bootstrap/ui-bootstrap-tpls
 //= require_self
 //= require_tree .
 
-angular.module('app', ['ngRoute', 'ui.bootstrap']);
+angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 
 
