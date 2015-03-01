@@ -1,25 +1,32 @@
 'use strict';
 
-angular.module('app').controller('SongPlaysController', function ($scope, $modal) {
+angular.module('app').controller('SongPlaysController', function ($scope, $modal, $http) {
   var getPlayData = function () {
-    return [
-      {song: {title: 'Blue Monday'}, artist: {name: 'New Order'}, time: new Date('02/14/2015 12:37:00')},
-      {song: {title: 'We Want the Airwaives'}, artist: {name: 'Ramones'}, time: new Date('02/14/2015 11:32')},
-      {song: {title: 'Kids With Guns'}, artist: {name: 'Gorillaz'}, time: new Date('02/14/2015 11:22')}
-    ];
+    return $http.get('play/').then(function (response) {
+      $scope.plays = response.data;
+    });
   };
 
-  $scope.plays = getPlayData();
+  getPlayData();
   $scope.alerts = [];
 
   $scope.addPlay = function () {
     var now = new Date();
-    $scope.newPlay = {time: now};
+    $scope.newPlay = {timestamp: now};
   };
 
   $scope.savePlay = function () {
-    $scope.plays.push($scope.newPlay);
-    $scope.alerts.push({type: 'success', msg: 'Song play added'});
+    $http.get('play/report', {
+      params: {
+        title: $scope.newPlay.song.title,
+        artistName: $scope.newPlay.song.artist.name
+      }
+    }).then(function () {
+      $scope.alerts.push({type: 'success', msg: 'Song play added'});
+      getPlayData();
+    }, function (error) {
+      $scope.alerts.put({type: 'danger', msg: 'Error creating play: ' + error});
+    });
     delete $scope.newPlay;
   };
 
@@ -51,7 +58,7 @@ angular.module('app').controller('SongPlaysController', function ($scope, $modal
       controller: 'confirmDialogController',
       resolve: {
         message: function () {
-          return 'Are you sure you want to delete "' + play.song.title + '" by ' + play.artist.name + '?'
+          return 'Are you sure you want to delete "' + play.song.title + '" by ' + play.song.artist.name + '?'
         },
         title: function () {
           return 'Confirm Play Delete';
@@ -60,8 +67,10 @@ angular.module('app').controller('SongPlaysController', function ($scope, $modal
     });
 
     modalInstance.result.then(function () {
-      $scope.plays.splice($scope.plays.indexOf(play), 1);
-      $scope.alerts.push({type: 'success', msg: 'Song play removed'});
+      $http.delete('play/delete/'+play.id).then(function() {
+        $scope.alerts.push({type: 'success', msg: 'Song play removed'});
+        getPlayData();
+      })
     });
   }
 

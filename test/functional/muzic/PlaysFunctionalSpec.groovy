@@ -29,11 +29,20 @@ class PlaysFunctionalSpec extends GebSpec {
     saveNewPlayButton.click()
 
     then:
+    alertMessage(5).text() == 'Song play added'
+
+    and:
     playsTotalCount == startPlaysCount + 1
 
     and:
     songTitle(playsTotalCount-1) == clasicSongName
     songArtist(playsTotalCount-1) == longForgottenArtistName
+
+    when:
+    closeAlertButton.click()
+
+    then:
+    alertCount == 0
   }
 
   def 'deletes a play'() {
@@ -52,6 +61,7 @@ class PlaysFunctionalSpec extends GebSpec {
 
     when:
     cancelButton.click()
+    waitFor { !$('.modal').displayed }
 
     then: "psych - didn't delete it"
     at PlaysViewPage
@@ -67,6 +77,9 @@ class PlaysFunctionalSpec extends GebSpec {
 
     then: "dialog closes"
     at PlaysViewPage
+
+    and:
+    alertMessage(5).text() == 'Song play removed'
 
     and: "we have one fewer plays"
     playsTotalCount == lastPlayIndex

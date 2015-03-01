@@ -5,6 +5,10 @@ eventCompileStart = { kind ->
 }
 
 private void executeNpmInstall() {
+  if (new File('node_modules').exists()) {
+    return
+  }
+
   def npmInstall = "npm install"
   println "| npm install..."
   def proc = npmInstall.execute()

@@ -46,7 +46,9 @@ class BootStrap {
             def artist = new Artist(name: artistName)
             artist.save(failOnError: true)
             tracks.each { def track ->
-              new Song(artist: artist, title: track).save(failOnError: true)
+              def song = new Song(artist: artist, title: track).save(failOnError: true)
+              def timestamp = new Date() - ((song.id+artist.id) as int)
+              new muzic.Play(song: song, timestamp: timestamp).save(failOnError: true)
             }
             log.info("Saved artist ${artist.name} (${artist.id})")
           }

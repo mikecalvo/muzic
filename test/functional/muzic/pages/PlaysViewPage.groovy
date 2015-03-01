@@ -11,6 +11,9 @@ class PlaysViewPage extends Page {
   static url = '#/plays'
 
   static content = {
+    alertCount { $('div.alert div').size() }
+    alertMessage { Integer wait -> waitFor(wait) { $('div.alert span')[2] } }
+    closeAlertButton { $('div.alert button') }
     addPlayButton { $('#add-play-btn') }
     playsTotalCount {
       $('table tr').size() - 1

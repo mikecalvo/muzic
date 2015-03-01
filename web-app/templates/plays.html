@@ -15,8 +15,8 @@
     </thead>
     <tr ng-repeat="play in plays">
       <td>{{ play.song.title }}</td>
-      <td><a href="#/artist/{{ play.artist.name }}">{{ play.artist.name }}</a></td>
-      <td>{{ play.time | date :'medium' }}</td>
+      <td><a href="#/artist/{{ play.song.artist.name }}">{{ play.song.artist.name }}</a></td>
+      <td>{{ play.timestamp | date :'medium' }}</td>
       <td>
         <button class="delete" ng-click="deletePlay(play)"><i class="glyphicon glyphicon-trash"></i></button>
       </td>
@@ -24,7 +24,7 @@
     <tr ng-show="newPlay">
       <td><input id="title" placeholder="Title" ng-model="newPlay.song.title"></td>
       <td><input id="artist" placeholder="Artist"
-                 ng-model="newPlay.artist.name"
+                 ng-model="newPlay.song.artist.name"
                  typeahead="artist for artist in getArtist($viewValue)"
                  typeahead-loading="loadingArtists"/>
 

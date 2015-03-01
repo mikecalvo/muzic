@@ -1,20 +1,23 @@
 package muzic
 
+import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-/**
- * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
- */
 @TestFor(PlayController)
+@Mock([Song, Artist, Play])
 class PlayControllerSpec extends Specification {
 
-  def setup() {
-  }
+  void "returns plays with song and artist information"() {
+    given:
+    def creep = new Song(title: 'Creep', artist: new Artist(name: 'Radiohead').save()).save()
+    new Play(song: creep, timestamp: new Date()).save()
 
-  def cleanup() {
-  }
+    when:
+    controller.index()
 
-  void "test something"() {
+    then:
+    response.text.contains('Creep')
+    response.text.contains('Radiohead')
   }
 }

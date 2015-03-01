@@ -1,37 +1,48 @@
 package muzic
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class PlayServiceSpec extends Specification {
 
-    def playService
+  def playService
 
-    def artist
-    def song
-    def profile
-    def follow
+  def artist
+  def song
+  def profile
+  def follow
 
-    def setup() {
-        artist = new Artist(name: 'The Cure').save(failOnError: true, flush: true)
-        song = new Song(title: 'Just Like Heaven', artist: artist).save(failOnError: true, flush: true)
-        profile = Profile.findByEmail('me@test.com')
-        follow = new Follow(artist: artist, profile: profile).save(failOnError: true, flush: true)
-    }
+  def setup() {
+    artist = new Artist(name: 'The Cure').save(failOnError: true, flush: true)
+    song = new Song(title: 'Just Like Heaven', artist: artist).save(failOnError: true, flush: true)
+    profile = Profile.findByEmail('me@test.com')
+    follow = new Follow(artist: artist, profile: profile).save(failOnError: true, flush: true)
+  }
 
-    def cleanup() {
-        follow.delete()
-        song.delete()
-        artist.delete()
-    }
+  def cleanup() {
+    follow.delete()
+    song.delete()
+    artist.delete()
+  }
 
-    void "song play is saved"() {
-        given:
+  @Unroll('#description')
+  def 'song play is saved'() {
+    given:
+    int startingPlayCount = Play.count()
 
-        when:
-        Play play = playService.songPlayed('Just Like Heaven', 'The Cure')
+    when:
+    playService.songPlayed(title, artistName)
 
-        then:
-        Play.findBySong(song).id == play.id
-        // ProfileMessage.findAllByProfile(profile).find { it.text.contains('Just Like Heaven')}
-    }
+    then:
+    Song.findByTitle(title)
+    Artist.findByName(artistName)
+    Play.count() == startingPlayCount + 1
+
+    where:
+    description           | title              | artistName
+    'New song and artist' | 'Remote Control'   | 'The Clash'
+    'New song'            | "Boys Don't Cry"   | 'The Cure'
+    'Existing song'       | 'Just Like Heaven' | 'The Cure'
+  }
+
 }
