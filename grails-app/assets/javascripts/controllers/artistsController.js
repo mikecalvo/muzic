@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('ArtistsController', function ($scope, $resource, $modal) {
+angular.module('app').controller('ArtistsController', function ($scope, $resource, confirmDialog) {
   var Artist = $resource('api/artists/:id', {}, {create: {method: 'PUT'}});
 
   var refreshArtistList = function () {
@@ -27,26 +27,13 @@ angular.module('app').controller('ArtistsController', function ($scope, $resourc
 
   $scope.deleteArtist = function (artist) {
     $scope.alerts = [];
-    var modalInstance = $modal.open({
-      templateUrl: 'templates/dialogs/confirmDialog.html',
-      size: 'lg',
-      controller: 'ConfirmDialogController',
-      resolve: {
-        message: function () {
-          return 'Are you sure you want to delete artist "' + artist.name + '"?';
-        },
-        title: function () {
-          return 'Confirm Play Delete';
-        }
-      }
-    });
-
-    modalInstance.result.then(function () {
-      artist.$delete({id: artist.id}).then(function () {
-        $scope.alerts.push({type: 'success', msg: artist.name+' removed'});
-        refreshArtistList();
+    confirmDialog('Confirm Play Delete', 'Are you sure you want to delete artist "' + artist.name + '"?')
+      .result.then(function () {
+        artist.$delete({id: artist.id}).then(function () {
+          $scope.alerts.push({type: 'success', msg: artist.name + ' removed'});
+          refreshArtistList();
+        });
       });
-    });
   };
 
   $scope.alerts = [];

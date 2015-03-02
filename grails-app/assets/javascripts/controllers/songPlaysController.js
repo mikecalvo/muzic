@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('SongPlaysController', function ($scope, $modal, $http) {
+angular.module('app').controller('SongPlaysController', function ($scope, $http, confirmDialog) {
   var getPlayData = function () {
     return $http.get('play/').then(function (response) {
       $scope.plays = response.data;
@@ -52,25 +52,13 @@ angular.module('app').controller('SongPlaysController', function ($scope, $modal
   };
 
   $scope.deletePlay = function (play) {
-    var modalInstance = $modal.open({
-      templateUrl: 'templates/dialogs/confirmDialog.html',
-      size: 'lg',
-      controller: 'ConfirmDialogController',
-      resolve: {
-        message: function () {
-          return 'Are you sure you want to delete "' + play.song.title + '" by ' + play.song.artist.name + '?'
-        },
-        title: function () {
-          return 'Confirm Play Delete';
-        }
-      }
-    });
-
-    modalInstance.result.then(function () {
-      $http.delete('play/delete/'+play.id).then(function() {
-        $scope.alerts.push({type: 'success', msg: 'Song play removed'});
-        getPlayData();
-      })
-    });
+    confirmDialog('Confirm Play Delete',
+      'Are you sure you want to delete "' + play.song.title + '" by ' + play.song.artist.name + '?')
+      .result.then(function () {
+        $http.delete('play/delete/' + play.id).then(function () {
+          $scope.alerts.push({type: 'success', msg: 'Song play removed'});
+          getPlayData();
+        })
+      });
   }
 });
