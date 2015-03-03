@@ -9,6 +9,7 @@ class PlaysFunctionalSpec extends GebSpec {
 
   static String clasicSongName = 'Wake Me Up Before You Go Go'
   static String longForgottenArtistName = 'Wham!'
+
   def 'adds a play'() {
     setup:
     to PlaysViewPage
@@ -23,13 +24,21 @@ class PlaysFunctionalSpec extends GebSpec {
     and:
     newPlayArtistText.displayed
 
+    and:
+    saveNewPlayButton.@disabled
+
     when:
     newPlayTitleText.value(clasicSongName)
     newPlayArtistText.value(longForgottenArtistName)
+
+    then:
+    !saveNewPlayButton.@disabled
+
+    when:
     saveNewPlayButton.click()
 
     then:
-    alertMessage(5).text() == 'Song play added'
+    alertMessage(5).text() == "Added play: \"${clasicSongName}\" by ${longForgottenArtistName}"
 
     and:
     playsTotalCount == startPlaysCount + 1

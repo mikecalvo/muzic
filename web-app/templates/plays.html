@@ -1,37 +1,60 @@
 <div ng-controller="SongPlaysController">
 
-  <h1>Song Plays</h1>
-  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <h1>Song Plays</h1>
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 
-  <div>
-    <button id="add-play-btn" class="btn btn-default" ng-click="addPlay()" ng-show="!newPlay">Add a Play</button>
-  </div>
+    <div>
+        <button id="add-play-btn" class="btn btn-default" ng-click="addPlay()" ng-show="!newPlay">Add a Play</button>
+    </div>
 
-  <table>
-    <thead>
-    <tr>
-      <td>Title</td><td>Artist</td><td>Date/Time</td><td></td>
-    </tr>
-    </thead>
-    <tr ng-repeat="play in plays">
-      <td>{{ play.song.title }}</td>
-      <td><a href="#/artist/{{ play.song.artist.name }}">{{ play.song.artist.name }}</a></td>
-      <td>{{ play.timestamp | date :'medium' }}</td>
-      <td>
-        <button class="delete" ng-click="deletePlay(play)"><i class="glyphicon glyphicon-trash"></i></button>
-      </td>
-    </tr>
-    <tr ng-show="newPlay">
-      <td><input id="title" placeholder="Title" ng-model="newPlay.song.title"></td>
-      <td><input id="artist" placeholder="Artist"
-                 ng-model="newPlay.song.artist.name"
-                 typeahead="artist for artist in getArtist($viewValue)"
-                 typeahead-loading="loadingArtists"/>
+    <table>
+        <thead>
+        <tr>
+            <td>Title</td>
+            <td>Artist</td>
+            <td>Date/Time</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tr ng-repeat="play in plays">
+            <td>{{ play.song.title }}</td>
+            <td><a href="#/artist/{{ play.song.artist.name }}">{{ play.song.artist.name }}</a></td>
+            <td>{{ play.timestamp | date :'medium' }}</td>
+            <td>
+                <button class="delete" ng-click="deletePlay(play)"><i class="glyphicon glyphicon-trash"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
 
-        <div ng-show="loadingArtists" class="spinner" style="position: relative; display: inline-block"></div>
-      </td>
-      <td>{{ newPlay.time | date :'medium' }}</td>
-      <td><button id="save-play-btn" class="btn btn-default" ng-click="savePlay()">Save</button></td>
-    </tr>
-  </table>
+    <form name="playForm" novalidate ng-keyup="playForm.$valid && $event.keyCode == 13 && savePlay()">
+        <div ng-show="newPlay">
+            <td><input id="title"
+                       placeholder="Title"
+                       ng-model="newPlay.song.title"
+                       required>
+            </td>
+            <td><input id="artist"
+                       placeholder="Artist"
+                       ng-model="newPlay.song.artist.name"
+                       typeahead="artist for artist in getArtist($viewValue)"
+                       typeahead-loading="loadingArtists"
+                       typeahead-wait-ms="500"
+                       required
+                    />
+
+                <div ng-show="loadingArtists" class="spinner"
+                     style="position: relative; display: inline-block"></div>
+            </td>
+            <td>{{ newPlay.time | date :'medium' }}</td>
+            <td>
+                <button id="save-play-btn"
+                        class="btn btn-default"
+                        ng-click="savePlay()"
+                        ng-disabled="playForm.$invalid">Save
+                </button>
+                <button class="btn btn-info" ng-click="resetAdd()">Cancel</button>
+            </td>
+        </div>
+    </form>
 </div>

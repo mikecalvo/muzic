@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('SongPlaysController', function ($scope, $http, confirmDialog) {
+angular.module('app').controller('SongPlaysController', function ($scope, $http, confirmDialog, Artist) {
   var getPlayData = function () {
     return $http.get('play/').then(function (response) {
       $scope.plays = response.data;
@@ -15,36 +15,45 @@ angular.module('app').controller('SongPlaysController', function ($scope, $http,
     $scope.newPlay = {timestamp: now};
   };
 
+  $scope.resetAdd = function () {
+    delete $scope.newPlay;
+    $scope.playForm.$setPristine();
+    $scope.playForm.$setUntouched();
+  };
+
   $scope.savePlay = function () {
+    if (!$scope.newPlay) {
+      return
+    }
+
+    var title = $scope.newPlay.song.title;
+    var artist = $scope.newPlay.song.artist.name;
+
     $http.get('play/report', {
       params: {
-        title: $scope.newPlay.song.title,
-        artistName: $scope.newPlay.song.artist.name
+        title: title,
+        artistName: artist
       }
     }).then(function () {
-      $scope.alerts.push({type: 'success', msg: 'Song play added'});
+      $scope.alerts.push({type: 'success', msg: 'Added play: "' + title + '" by ' + artist});
       getPlayData();
     }, function (error) {
       $scope.alerts.put({type: 'danger', msg: 'Error creating play: ' + error});
     });
-    delete $scope.newPlay;
+
+    $scope.resetAdd();
   };
 
   $scope.getArtist = function (input) {
-    var results = [];
-    input = input.toLowerCase();
-    var plays = $scope.plays;
-    for (var i = 0; i < plays.length && results.length < 8; i++) {
-      var artist = plays[i].artist;
-      if (artist && artist.name.toLowerCase().indexOf(input) !== -1) {
-        results.push(artist.name);
+    $scope.loadingArtists = true;
+    return Artist.query({q: input}).$promise.then(function (results) {
+      var artists = [];
+      for (var i = 0; i < results.length; i++) {
+        artists.push(results[i].name)
       }
-    }
-
-    setTimeout(function () {
-      return results;
-    }, 1000);
-    return results;
+      $scope.loadingArtists = false;
+      return artists;
+    });
   };
 
   $scope.closeAlert = function (index) {

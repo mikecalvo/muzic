@@ -56,7 +56,7 @@ class ArtistRestControllerSpec extends Specification {
     controller.params.id = id
 
     and:
-    controller.request.json = '{"class": "muzic.Artist", "name": "The Groop", "id": '+id+'}'
+    controller.request.json = '{"class": "muzic.Artist", "name": "The Groop", "id": ' + id + '}'
 
     when:
     controller.update()
@@ -65,5 +65,26 @@ class ArtistRestControllerSpec extends Specification {
     response.status == 200
     response.json.id != null
     response.json.name == 'The Groop'
+  }
+
+  def 'searches for an artist'() {
+    given:
+    def headyArtists = ['Portishead', 'Talking Heads', 'Radiohead', 'Murray Head', 'Big Head Todd']
+    def headlessArtists = ['Stereolab', 'Joy Division']
+    request.method = 'GET'
+    (headlessArtists + headyArtists).each {
+      new Artist(name: it).save()
+    }
+
+    when:
+    controller.index(5, 'head')
+    def json = response.json
+
+    then:
+    response.status == 200
+    json.size() == headyArtists.size()
+    headyArtists.each { String name ->
+      assert json.find { it.name == name }
+    }
   }
 }

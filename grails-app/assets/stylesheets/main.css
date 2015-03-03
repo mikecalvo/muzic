@@ -594,3 +594,17 @@ a.skip {
 	position: absolute;
 	left: -9999px;
 }
+
+.page-content {
+    margin: 10px;
+    padding: 5px;
+    border: thin solid lightgray;
+}
+
+.ng-valid.ng-touched {
+    border: green 3px solid;
+}
+
+.ng-invalid.ng-touched {
+    border: red 3px solid;
+}

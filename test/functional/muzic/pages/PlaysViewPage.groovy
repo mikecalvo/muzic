@@ -16,7 +16,7 @@ class PlaysViewPage extends Page {
     closeAlertButton { $('div.alert button') }
     addPlayButton { $('#add-play-btn') }
     playsTotalCount {
-      $('table tr').size() - 1
+      $('table tr').size()
     }
 
     songTitle { Integer index -> $('table tr')[index].$('td')[0].text() }

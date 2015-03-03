@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('app').controller('ArtistsController', function ($scope, $resource, confirmDialog) {
-  var Artist = $resource('api/artists/:id', {}, {create: {method: 'PUT'}});
-
+angular.module('app').controller('ArtistsController', function ($scope, $resource, confirmDialog, Artist) {
   var refreshArtistList = function () {
     $scope.artists = Artist.query();
     $scope.artists.$promise.then(function (result) {
