@@ -6,7 +6,6 @@ class PlayFunctionalSpec extends Specification {
 
   @Delegate static FunctionalTestUtils utils = new FunctionalTestUtils()
 
-  def remote = new MuzicRemoteControl()
 
   def setupSpec() {
     if (!utils) {
@@ -21,6 +20,7 @@ class PlayFunctionalSpec extends Specification {
 
   def 'report a play'() {
     given:
+    def remote = new MuzicRemoteControl()
     def followId = remote {
       new Follow(profile: Profile.findByEmail('me@test.com'), artist: Artist.findByName('Radiohead')).save(flush: true).id
     }
