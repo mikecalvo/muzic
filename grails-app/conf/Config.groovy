@@ -120,8 +120,8 @@ log4j.main = {
   // debug 'org.apache.http.wire'
 
   // Uncomment next line to debug spring security issues
-  debug 'grails.plugin.springsecurity'
-  info 'grails.plugin.springsecurity.web.filter.DebugFilter'
+  // debug 'grails.plugin.springsecurity'
+  // info 'grails.plugin.springsecurity.web.filter.DebugFilter'
 
   info "grails.app"
   info 'muzic'

@@ -83,7 +83,7 @@ class PlaysFunctionalSpec extends GebSpec {
     at PlaysViewPage
 
     when:
-    deleteButton(lastPlayIndex).click()
+    waitFor { deleteButton(lastPlayIndex).click() }
 
     then:
     at ConfirmDialogViewPage
