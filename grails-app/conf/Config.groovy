@@ -116,9 +116,12 @@ log4j.main = {
   //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
   //}
 
+  // Uncomment to debug http client request issues
+  // debug 'org.apache.http.wire'
+
   // Uncomment next line to debug spring security issues
-  // debug 'org.apache.http.wire', 'grails.plugin.springsecurity'
-  //info 'grails.plugin.springsecurity.web.filter.DebugFilter'
+  debug 'grails.plugin.springsecurity'
+  info 'grails.plugin.springsecurity.web.filter.DebugFilter'
 
   info "grails.app"
   info 'muzic'
@@ -137,8 +140,8 @@ log4j.main = {
 }
 
 // To debug security issues uncomment these lines
-//grails.logging.jul.usebridge = true
-//grails.plugin.springsecurity.debug.useFilter = true
+grails.logging.jul.usebridge = true
+grails.plugin.springsecurity.debug.useFilter = true
 
 // Enable access by default
 //grails.plugin.springsecurity.rejectIfNoRule = false
@@ -153,6 +156,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/index'                   : ['permitAll'],
     '/index.gsp'               : ['permitAll'],
     '/assets/**'               : ['permitAll'],
+    '/templates/**'            : ['permitAll'],
     '/**/js/**'                : ['permitAll'],
     '/**/css/**'               : ['permitAll'],
     '/**/images/**'            : ['permitAll'],
@@ -170,5 +174,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/profile/**'              : ['ROLE_USER'],
 
     '/grails-remote-control/**': ['permitAll']
+]
+
+grails.assets.minifyJS = true
+grails.assets.minifyOptions = [
+    languageMode     : 'ES5',
+    targetLanguage   : 'ES5',
+    optimizationLevel: 'WHITESPACE_ONLY'
+]
+grails.assets.excludes = [
+    "jquery/src/*.js",
+    "jquery/src/*/*.js",
+    "bootstrap/js/*.js",
+    "bootstrap/grunt/*.js",
+    "**/*.less"
 ]
 

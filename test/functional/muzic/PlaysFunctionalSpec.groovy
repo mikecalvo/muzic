@@ -1,6 +1,7 @@
 package muzic
 import geb.spock.GebSpec
 import muzic.pages.ConfirmDialogViewPage
+import muzic.pages.LoginPage
 import muzic.pages.PlaysViewPage
 import spock.lang.Stepwise
 
@@ -9,6 +10,13 @@ class PlaysFunctionalSpec extends GebSpec {
 
   static String clasicSongName = 'Wake Me Up Before You Go Go'
   static String longForgottenArtistName = 'Wham!'
+
+  def setupSpec() {
+    to LoginPage
+
+    login('me', 'password')
+  }
+
   def 'adds a play'() {
     setup:
     to PlaysViewPage
