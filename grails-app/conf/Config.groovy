@@ -108,7 +108,6 @@ environments {
   }
 }
 
-
 // log4j configuration
 log4j.main = {
   // Example of changing the log pattern for the default console appender:
@@ -117,8 +116,11 @@ log4j.main = {
   //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
   //}
 
+  // Uncomment next line to debug spring security issues
+  // debug 'org.apache.http.wire', 'grails.plugin.springsecurity'
+  //info 'grails.plugin.springsecurity.web.filter.DebugFilter'
+
   info "grails.app"
-  info 'grails.plugin.springsecurity.web.filter.DebugFilter'
   info 'muzic'
 
   error 'org.codehaus.groovy.grails.web.servlet',        // controllers
@@ -135,32 +137,38 @@ log4j.main = {
 }
 
 // To debug security issues uncomment these lines
-// grails.logging.jul.usebridge = true
-// grails.plugin.springsecurity.debug.useFilter = true
+//grails.logging.jul.usebridge = true
+//grails.plugin.springsecurity.debug.useFilter = true
 
 // Enable access by default
-grails.plugin.springsecurity.rejectIfNoRule = false
-grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+//grails.plugin.springsecurity.rejectIfNoRule = false
+//grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'muzic.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'muzic.UserRole'
 grails.plugin.springsecurity.authority.className = 'muzic.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-    '/'              : ['permitAll'],
-    '/index'         : ['permitAll'],
-    '/index.gsp'     : ['permitAll'],
-    '/assets/**'     : ['permitAll'],
-    '/**/js/**'      : ['permitAll'],
-    '/**/css/**'     : ['permitAll'],
-    '/**/images/**'  : ['permitAll'],
-    '/**/favicon.ico': ['permitAll'],
+    '/'                        : ['permitAll'],
+    '/index'                   : ['permitAll'],
+    '/index.gsp'               : ['permitAll'],
+    '/assets/**'               : ['permitAll'],
+    '/**/js/**'                : ['permitAll'],
+    '/**/css/**'               : ['permitAll'],
+    '/**/images/**'            : ['permitAll'],
+    '/**/favicon.ico'          : ['permitAll'],
 
     // REST API
-    '/api/songs/**': ['permitAll'],
+    // Stupid, stupid, stupid spring security uses controller names here (rather than urls)
+    // Debug issues with by uncommenting lines above about debugging security issues
+    '/song/*'                  : ['ROLE_USER'], // actually url: /rest/songs
+    '/artistrest/*'            : ['ROLE_USER'], // actual url: /rest/artists
 
-    '/artist/**': ['ROLE_USER'],
-    '/profile/**': ['ROLE_USER'],
+    // Regular controllers - these work as expected
+    '/artist/**'               : ['ROLE_USER'],
+    '/play/**'                 : ['ROLE_USER'],
+    '/profile/**'              : ['ROLE_USER'],
+
     '/grails-remote-control/**': ['permitAll']
 ]
 
