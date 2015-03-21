@@ -153,6 +153,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/index'                   : ['permitAll'],
     '/index.gsp'               : ['permitAll'],
     '/assets/**'               : ['permitAll'],
+    '/templates/**'            : ['permitAll'],
     '/**/js/**'                : ['permitAll'],
     '/**/css/**'               : ['permitAll'],
     '/**/images/**'            : ['permitAll'],
@@ -170,5 +171,19 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/profile/**'              : ['ROLE_USER'],
 
     '/grails-remote-control/**': ['permitAll']
+]
+
+grails.assets.minifyJS = true
+grails.assets.minifyOptions = [
+    languageMode     : 'ES5',
+    targetLanguage   : 'ES5',
+    optimizationLevel: 'WHITESPACE_ONLY'
+]
+grails.assets.excludes = [
+    "jquery/src/*.js",
+    "jquery/src/*/*.js",
+    "bootstrap/js/*.js",
+    "bootstrap/grunt/*.js",
+    "**/*.less"
 ]
 
