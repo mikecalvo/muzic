@@ -117,6 +117,9 @@ log4j.main = {
   //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
   //}
 
+  // Uncomment next line to debug spring security issues
+  debug 'org.apache.http.wire', 'grails.plugin.springsecurity'
+
   info "grails.app"
   info 'grails.plugin.springsecurity.web.filter.DebugFilter'
   info 'muzic'
@@ -135,12 +138,12 @@ log4j.main = {
 }
 
 // To debug security issues uncomment these lines
-// grails.logging.jul.usebridge = true
-// grails.plugin.springsecurity.debug.useFilter = true
+grails.logging.jul.usebridge = true
+grails.plugin.springsecurity.debug.useFilter = true
 
 // Enable access by default
-grails.plugin.springsecurity.rejectIfNoRule = false
-grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+//grails.plugin.springsecurity.rejectIfNoRule = false
+//grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'muzic.User'
@@ -157,10 +160,15 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/**/favicon.ico': ['permitAll'],
 
     // REST API
-    '/api/songs/**': ['permitAll'],
+    // Stupid, stupid, stupid spring security uses controller names here (rather than urls)
+    // Debug issues with by uncommenting lines above about debugging security issues
+    '/song/*': ['ROLE_USER'], // actually url: /rest/songs
+    '/artistrest/*': ['ROLE_USER'], // actual url: /rest/artists
 
+    // Regular controllers - these work as expected
     '/artist/**': ['ROLE_USER'],
     '/profile/**': ['ROLE_USER'],
+
     '/grails-remote-control/**': ['permitAll']
 ]
 
