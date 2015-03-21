@@ -1,25 +1,22 @@
 package muzic
 
-import grails.plugin.remotecontrol.RemoteControl
-import grails.util.Holders
-import groovy.json.JsonSlurper
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.DecompressingHttpClient
-import org.apache.http.impl.client.DefaultHttpClient
 import spock.lang.Specification
+import spock.lang.Stepwise
 
+@Stepwise
 class SongRestFunctionalSpec extends Specification {
 
   static Integer songId
+  static Integer radioheadId
 
-  JsonSlurper jsonSlurper = new JsonSlurper()
-
-  // def grailsApplication
-
-  private def client = new DefaultHttpClient()
+  static HttpUtils httpUtils = new HttpUtils()
 
   def setupSpec() {
-    def remote = new RemoteControl()
+    def response = httpUtils.doFormPost('j_spring_security_check', [j_username: 'me', j_password: 'password'])
+    assert response.status == 302
+    assert response.statusText == 'Found'
+
+    def remote = new MuzicRemoteControl()
     songId = remote {
       def radiohead = new Artist(name: 'Radiohead')
       radiohead.save(flush: true)
@@ -28,21 +25,28 @@ class SongRestFunctionalSpec extends Specification {
       println "Song id ${song.id}"
       return song.id
     } as Integer
+
+    radioheadId = remote {
+      Artist.findByName('Radiohead').id
+    } as Integer
   }
 
   def cleanupSpec() {
-    def remote = new RemoteControl()
+    def remote = new MuzicRemoteControl()
     remote {
       Song.withTransaction {
-        Song.findByTitle('Creep').delete()
-        Artist.findByName('Radiohead').delete()
+        def radiohead = Artist.findByName('Radiohead')
+        Song.findAllWhere([artist: radiohead]).each {
+          it.delete()
+        }
+        radiohead.delete()
       }
     }
   }
 
   def 'returns song list'() {
     when:
-    def resp = doGet('api/songs')
+    def resp = httpUtils.doGet('api/songs')
     assert resp.status == 200
     assert resp.contentType == 'application/json'
     def songs = resp.data
@@ -52,32 +56,41 @@ class SongRestFunctionalSpec extends Specification {
   }
 
   def 'returns song detail'() {
-    when:
-    def resp = doGet("api/songs/${songId}" as String)
-    assert resp.status == 200
-    assert resp.contentType == 'application/json'
-    def song = resp.data
+    when: 'A REST Call is made to get a known song by id'
+    def resp = httpUtils.doGet("api/songs/${songId}" as String)
 
-    then:
-    song.id == songId
-    song.title == 'Creep'
+    then: 'Server responds with OK status'
+    resp.status == 200
+
+    and: 'Server returns JSON'
+    resp.contentType == 'application/json'
+
+    and: 'Id and title are what we expect from the setup'
+    resp.data.id == songId
+    resp.data.title == 'Creep'
   }
 
-  private def doGet(String path) {
-    def url = Holders.config.grails.serverURL + '/'+path
-    def request = new HttpGet(url)
-    def client = new DecompressingHttpClient(new DefaultHttpClient())
-    def response = client.execute(request)
+  def 'creates a song'() {
+    when: 'Create REST Call is made'
+    def resp = httpUtils.doJsonPost('api/songs', [title: 'Lucky', artist: [id: radioheadId, name: 'Radiohead']])
 
-    String str = new String(response.entity?.content?.bytes, 'UTF-8');
-    def contentType = response.entity?.contentType?.value
-    if (contentType?.contains(';charset=')) {
-      contentType = contentType.split(';')[0]
-    }
-    return [
-        status: response.statusLine.statusCode,
-        contentType: contentType,
-        data: jsonSlurper.parseText(str)
-    ]
+    then: 'Server returns a status of Created'
+    resp.status == 201
+
+    and: 'The saved data has an id value'
+    resp.data.id
+
+    when: 'Get REST Call is made for created song'
+    resp = httpUtils.doGet("api/songs/${resp.data.id}" as String)
+
+    then: 'Server returns OK status'
+    resp.status == 200
+
+    and: 'Server returns JSON'
+    resp.contentType == 'application/json'
+
+    and: 'The title of the created song is the title we sent in the JSON'
+    resp.data.title == 'Lucky'
   }
 }
+
