@@ -1,7 +1,5 @@
 package muzic
-
 import geb.spock.GebSpec
-import grails.plugin.remotecontrol.RemoteControl
 import muzic.pages.LoginPage
 import muzic.pages.ProfilePage
 import spock.lang.Stepwise
@@ -10,7 +8,7 @@ import spock.lang.Stepwise
 class ProfileFunctionalSpec extends GebSpec {
 
   def setupSpec() {
-    def remote = new RemoteControl()
+    def remote = new MuzicRemoteControl()
     remote {
       def user = new User(username: 'profile-test', password: 'password')
       user.save(flush: true, failOnError: true)
@@ -24,7 +22,7 @@ class ProfileFunctionalSpec extends GebSpec {
   }
 
   def cleanupSpec() {
-    def remote = new RemoteControl()
+    def remote = new MuzicRemoteControl()
     remote {
       def user = User.findByUsername('profile-test')
       def profile = Profile.findByUser(user)
