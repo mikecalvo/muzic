@@ -9,7 +9,7 @@ import spock.lang.Stepwise
 @Stepwise
 class ArtistFunctionalSpec extends GebSpec {
 
-  def remote = new RemoteControl()
+  def remote = new MuzicRemoteControl()
 
   def artistId
 
