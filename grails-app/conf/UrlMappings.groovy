@@ -8,6 +8,7 @@ class UrlMappings {
     }
 
     "/api/artists"(resources: 'artistRest')
+    "/api/songs-custom"(resources: 'songRest')
 
     "/"(view: "/index")
     "500"(view: '/error')

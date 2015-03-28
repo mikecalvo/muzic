@@ -120,8 +120,8 @@ log4j.main = {
   // debug 'org.apache.http.wire'
 
   // Uncomment next line to debug spring security issues
-  // debug 'grails.plugin.springsecurity'
-  // info 'grails.plugin.springsecurity.web.filter.DebugFilter'
+  debug 'grails.plugin.springsecurity'
+  info 'grails.plugin.springsecurity.web.filter.DebugFilter'
 
   info "grails.app"
   info 'grails.plugin.springsecurity.web.filter.DebugFilter'
@@ -141,8 +141,8 @@ log4j.main = {
 }
 
 // To debug security issues uncomment these lines
-// grails.logging.jul.usebridge = true
-// grails.plugin.springsecurity.debug.useFilter = true
+grails.logging.jul.usebridge = true
+grails.plugin.springsecurity.debug.useFilter = true
 
 // Enable access by default
 //grails.plugin.springsecurity.rejectIfNoRule = false
@@ -168,6 +168,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     // Debug issues with by uncommenting lines above about debugging security issues
     '/song/*'                  : ['ROLE_USER'], // actually url: /rest/songs
     '/artistrest/*'            : ['ROLE_USER'], // actual url: /rest/artists
+    '/songrest/*'              : ['permitAll'], // actual url: /rest/songs-custom
 
     // Regular controllers - these work as expected
     '/artist/**'               : ['ROLE_USER'],
