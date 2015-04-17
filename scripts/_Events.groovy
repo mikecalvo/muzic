@@ -8,7 +8,8 @@ private void executeNpmInstall() {
     return
   }
 
-  def npmInstall = "npm install"
+  def npmInstall = System.properties['os.name'].toLowerCase().contains('windows') ? "cmd.exe /C npm install" : "npm install"
+
   println "| npm install..."
   def proc = npmInstall.execute()
   proc.waitFor()
@@ -19,7 +20,9 @@ private void executeNpmInstall() {
 }
 
 private void executeGruntTasks() {
-  def gruntScript = "node_modules/.bin/grunt"
+  def gruntScript = System.properties['os.name'].toLowerCase().contains('windows') ?
+      "cmd.exe /C node_modules\\.bin\\grunt" :
+      "node_modules/.bin/grunt"
   println "| Load js dependencies from cache..."
   def proc = gruntScript.execute()  // execute default task to load dependencies from local cache.
   proc.waitFor()
