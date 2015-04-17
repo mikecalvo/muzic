@@ -152,9 +152,9 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'muzic.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'muzic.UserRole'
 grails.plugin.springsecurity.authority.className = 'muzic.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-    '/'                        : ['permitAll'],
-    '/index'                   : ['permitAll'],
-    '/index.gsp'               : ['permitAll'],
+    '/'                        : ['ROLE_USER'],
+    '/index'                   : ['ROLE_USER'],
+    '/index.gsp'               : ['ROLE_USER'],
     '/assets/**'               : ['permitAll'],
     '/templates/**'            : ['permitAll'],
     '/**/js/**'                : ['permitAll'],
@@ -172,6 +172,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/artist/**'               : ['ROLE_USER'],
     '/play/**'                 : ['ROLE_USER'],
     '/profile/**'              : ['ROLE_USER'],
+
+    '/api/**'                  : ['permitAll'],
 
     '/grails-remote-control/**': ['permitAll']
 ]
