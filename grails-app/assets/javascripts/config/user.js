@@ -1,1 +1,0 @@
-angular.module('app').value('loggedInUser', window.loggedInUser);
