@@ -85,5 +85,6 @@ grails.project.dependency.resolution = {
     compile ":asset-pipeline:2.1.1"
     compile ":mongodb:3.0.2"
     test "org.grails.plugins:geb:0.10.0"
+    test ":karma-test-runner:0.2.2"
   }
 }

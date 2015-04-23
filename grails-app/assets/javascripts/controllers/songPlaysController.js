@@ -7,7 +7,6 @@ angular.module('app').controller('SongPlaysController', function ($scope, $http,
     });
   };
 
-  getPlayData();
   $scope.alerts = [];
 
   $scope.addPlay = function () {
@@ -37,8 +36,8 @@ angular.module('app').controller('SongPlaysController', function ($scope, $http,
     }).then(function () {
       $scope.alerts.push({type: 'success', msg: 'Added play: "' + title + '" by ' + artist});
       getPlayData();
-    }, function (error) {
-      $scope.alerts.put({type: 'danger', msg: 'Error creating play: ' + error});
+    }, function (response) {
+      $scope.alerts.push({type: 'danger', msg: 'Error creating play: ' + response.data});
     });
 
     $scope.resetAdd();
@@ -69,5 +68,7 @@ angular.module('app').controller('SongPlaysController', function ($scope, $http,
           getPlayData();
         })
       });
-  }
+  };
+
+  getPlayData();
 });
